@@ -12,7 +12,7 @@ def load_data():
     alias_to_name = {alias: name for name, alias in team_members}
     return pairings, alias_to_name
 
-# Christmas tree ASCII art
+# Christmas tree made of tree emojis
 def christmas_tree():
     return """
         🌟
@@ -57,8 +57,8 @@ def main():
     .tree {
         font-family: monospace;
         white-space: pre;
-        line-height: 1;
-        color: #007a33;
+        line-height: 1.2;
+        font-size: 20px;
     }
     .centered {
         text-align: center;
@@ -84,8 +84,8 @@ def main():
     # Title with emojis
     st.markdown("<h1 class='centered'>🎄 Secret Santa Revealer 🎅</h1>", unsafe_allow_html=True)
 
-    # Display ASCII Christmas tree
-    st.markdown(f"<pre class='tree centered'>{christmas_tree()}</pre>", unsafe_allow_html=True)
+    # Display Christmas tree
+    st.markdown(f"<div class='tree centered'>{christmas_tree()}</div>", unsafe_allow_html=True)
 
     # Load data
     pairings, alias_to_name = load_data()
