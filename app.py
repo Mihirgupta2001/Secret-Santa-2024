@@ -87,6 +87,11 @@ def main():
         background-color: #BB2528;
         color: #ffffff;
     }
+    .stSuccess, .stWarning, .stError {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -94,7 +99,7 @@ def main():
     st.markdown("<h1 class='centered'>🎄 Secret Santa Revealer 🎅</h1>", unsafe_allow_html=True)
 
     # Display Christmas tree
-    st.markdown(f"<pre class='tree'>{christmas_tree()}</pre>", unsafe_allow_html=True)
+    st.markdown(f"<div class='tree'>{christmas_tree()}</div>", unsafe_allow_html=True)
 
     # Load data
     pairings, alias_to_name = load_data()
@@ -109,7 +114,7 @@ def main():
                 if user_alias in pairings:
                     recipient_alias = pairings[user_alias]
                     recipient_name = alias_to_name.get(recipient_alias, recipient_alias)
-                    st.success(f"🎁 Ho Ho Ho! Your Secret Santa recipient is: {recipient_name} 🎁")
+                    st.markdown(f"<div class='stSuccess'>🎁 Ho Ho Ho! Your Secret Santa recipient is: <span style='color: #FFD700; font-size: 1.2em;'>{recipient_name}</span> 🎁</div>", unsafe_allow_html=True)
                     st.balloons()
                 else:
                     st.error("Oops! This elf name is not on Santa's list. Try again!")
