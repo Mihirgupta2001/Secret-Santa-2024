@@ -40,27 +40,43 @@ def main():
     st.markdown("""
     <style>
     .stApp {
-        background-color: #2c5a7c;
-        color: #FFFFFF;
+        background-color: #f0f0f0;
+        color: #1e1e1e;
     }
     .stButton>button {
-        color: #FFFFFF;
+        color: #ffffff;
         background-color: #c41e3a;
-        border: 2px solid #00a86b;
+        border: 2px solid #007a33;
         font-weight: bold;
     }
     .stTextInput>div>div>input {
-        color: #2c5a7c;
-        background-color: #f0f0f0;
+        color: #1e1e1e;
+        background-color: #ffffff;
+        border: 2px solid #007a33;
     }
     .tree {
         font-family: monospace;
         white-space: pre;
         line-height: 1;
-        color: #00a86b;
+        color: #007a33;
     }
     .centered {
         text-align: center;
+    }
+    h1 {
+        color: #c41e3a;
+    }
+    .stSuccess {
+        background-color: #007a33;
+        color: #ffffff;
+    }
+    .stWarning {
+        background-color: #ffd700;
+        color: #1e1e1e;
+    }
+    .stError {
+        background-color: #c41e3a;
+        color: #ffffff;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -93,7 +109,7 @@ def main():
 
     # Festive footer
     st.markdown("---")
-    st.markdown("<p class='centered'>🎄 Merry Christmas and Happy Secret Santa! 🎅</p>", unsafe_allow_html=True)
+    st.markdown("<p class='centered' style='color: #c41e3a;'>🎄 Merry Christmas and Happy Secret Santa! 🎅</p>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
