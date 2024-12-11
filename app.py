@@ -44,7 +44,7 @@ def main():
         color: #1e1e1e;
     }
     .stButton>button {
-        color: #ffffff;
+        color: #F0F0F0;
         background-color: #146B3A;
         border: 2px solid #BB2528;
         font-weight: bold;
@@ -55,7 +55,7 @@ def main():
     .stButton>button:hover {
         background-color: #BB2528;
         border-color: #146B3A;
-        color: #ffffff;
+        color: #F0F0F0;
     }
     .stTextInput>div>div>input {
         color: #1e1e1e;
@@ -99,7 +99,7 @@ def main():
     st.markdown("<h1 class='centered'>🎄 Secret Santa Revealer 🎅</h1>", unsafe_allow_html=True)
 
     # Display Christmas tree
-    st.markdown(f"<div class='tree'>{christmas_tree()}</div>", unsafe_allow_html=True)
+    st.markdown(f"<pre class='tree'>{christmas_tree()}</pre>", unsafe_allow_html=True)
 
     # Load data
     pairings, alias_to_name = load_data()
