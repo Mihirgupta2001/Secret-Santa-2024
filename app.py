@@ -55,11 +55,12 @@ def main():
         background-color: #f0f0f0;
     }
     .tree {
-        font-family: monospace;
-        white-space: pre;
-        text-align: center;
-        color: #00a86b;
-    }
+    font-family: monospace;
+    white-space: pre;
+    display: flex;
+    justify-content: center;
+    color: #00a86b;
+}
     </style>
     """, unsafe_allow_html=True)
 
