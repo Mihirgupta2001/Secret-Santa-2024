@@ -15,17 +15,17 @@ def load_data():
 # Christmas tree ASCII art
 def christmas_tree():
     return """
-        *
-       ***
-      *****
-     *******
-    *********
-   ***********
-  *************
- ***************
-*****************
-       |||
-       |||
+         🌟
+         🎄
+        🎄🎄
+       🎄🎄🎄
+      🎄🎄🎄🎄
+     🎄🎄🎄🎄🎄
+    🎄🎄🎄🎄🎄🎄
+   🎄🎄🎄🎄🎄🎄🎄
+  🎄🎄🎄🎄🎄🎄🎄🎄
+ 🎄🎄🎄🎄🎄🎄🎄🎄🎄
+        🎁🎁🎁
     """
 
 # Streamlit app
@@ -41,16 +41,24 @@ def main():
     st.markdown("""
     <style>
     .stApp {
-        background-color: #0C5E1C;
+        background-color: #1e3f41;
         color: #FFFFFF;
     }
     .stButton>button {
-        color: #0C5E1C;
-        background-color: #D42426;
-        border: 2px solid #FFFFFF;
+        color: #FFFFFF;
+        background-color: #c41e3a;
+        border: 2px solid #00a86b;
+        font-weight: bold;
     }
     .stTextInput>div>div>input {
-        color: #0C5E1C;
+        color: #1e3f41;
+        background-color: #f0f0f0;
+    }
+    .tree {
+        font-family: monospace;
+        white-space: pre;
+        text-align: center;
+        color: #00a86b;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -59,7 +67,7 @@ def main():
     st.title("🎄 Secret Santa Revealer 🎅")
 
     # Display ASCII Christmas tree
-    st.text(christmas_tree())
+    st.markdown(f'<div class="tree">{christmas_tree()}</div>', unsafe_allow_html=True)
 
     # Load data
     pairings, alias_to_name = load_data()
@@ -77,7 +85,7 @@ def main():
             else:
                 st.error("Oops! This elf name is not on Santa's list. Try again!")
         else:
-            st.error("Please enter your elf name (alias).")
+            st.warning("Please enter your elf name (alias).")
 
     # Festive footer
     st.markdown("---")
