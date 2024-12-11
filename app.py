@@ -1,47 +1,38 @@
 import streamlit as st
 import json
-from cryptography.fernet import Fernet
-import base64
 
-# Function to generate password for each user
-def generate_password(name, birth_year):
-    return f"{name[:4].lower()}{birth_year}"
-
-# Function to decrypt data with a specific password
-def decrypt_data(encrypted_data, password):
-    key = base64.urlsafe_b64encode(password.encode().ljust(32)[:32])
-    fernet = Fernet(key)
-    return fernet.decrypt(encrypted_data.encode()).decode()
+# Load pairings and create a reverse lookup dictionary
+def load_data():
+    with open('pairings.json', 'r') as f:
+        pairings = json.load(f)
+    
+    # Create a dictionary to map aliases to names
+    with open('team_members.json', 'r') as f:
+        team_members = json.load(f)
+    
+    alias_to_name = {alias: name for name, alias in team_members}
+    return pairings, alias_to_name
 
 # Streamlit app
 def main():
     st.title("Secret Santa Revealer")
 
-    # Load encrypted pairings
-    with open('encrypted_pairings.json', 'r') as f:
-        encrypted_pairings = json.load(f)
+    # Load data
+    pairings, alias_to_name = load_data()
 
     # User input
-    name = st.text_input("Your Name:")
-    birth_year = st.number_input("Your Birth Year:", min_value=1900, max_value=2023, value=1990)
+    user_alias = st.text_input("Your Alias:")
 
     if st.button("Reveal My Secret Santa Recipient"):
-        if name and birth_year:
-            password = generate_password(name, birth_year)
-            try:
-                # Encrypt the input name to find the matching key
-                encrypted_name = encrypt_data(name, password)
-                for encrypted_gifter, encrypted_recipient in encrypted_pairings.items():
-                    if decrypt_data(encrypted_gifter, password) == name:
-                        decrypted_recipient = decrypt_data(encrypted_recipient, password)
-                        st.success(f"Your Secret Santa recipient is: {decrypted_recipient}")
-                        break
-                else:
-                    st.error("Name not found in the participants list.")
-            except:
-                st.error("Invalid name or birth year. Please try again.")
+        if user_alias:
+            if user_alias in pairings:
+                recipient_alias = pairings[user_alias]
+                recipient_name = alias_to_name.get(recipient_alias, recipient_alias)
+                st.success(f"Your Secret Santa recipient is: {recipient_name}")
+            else:
+                st.error("Alias not found in the participants list.")
         else:
-            st.error("Please enter both your name and birth year.")
+            st.error("Please enter your alias.")
 
 if __name__ == "__main__":
     main()
