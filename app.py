@@ -1,32 +1,3 @@
-import streamlit as st
-import json
-
-# Load pairings and create a reverse lookup dictionary
-def load_data():
-    with open('pairings.json', 'r') as f:
-        pairings = json.load(f)
-    
-    with open('team_members.json', 'r') as f:
-        team_members = json.load(f)
-    
-    alias_to_name = {alias: name for name, alias in team_members}
-    return pairings, alias_to_name
-
-# Christmas tree made of tree emojis
-def christmas_tree():
-    return """
-        ⭐
-        🎄
-       🎄🎄
-      🎄🎄🎄
-     🎄🎄🎄🎄
-    🎄🎄🎄🎄🎄
-   🎄🎄🎄🎄🎄🎄
-  🎄🎄🎄🎄🎄🎄🎄
- 🎄🎄🎄🎄🎄🎄🎄🎄
-     🎁🎁🎁
-    """
-
 # Streamlit app
 def main():
     # Set page config for a festive look
