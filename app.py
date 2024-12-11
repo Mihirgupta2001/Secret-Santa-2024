@@ -85,7 +85,7 @@ def main():
 
     # User input
     user_alias = st.text_input("Enter Your Elf Name (Alias):")
-    user_alias = lower(user_alias)
+    user_alias = user_alias.lower()
 
     if st.button("Reveal My Secret Santa Recipient"):
         if user_alias:
