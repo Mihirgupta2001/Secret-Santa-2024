@@ -54,6 +54,9 @@ def main():
         color: #1e3f41;
         background-color: #f0f0f0;
     }
+    .stTextInput>label {
+        color: #b3ffb3 !important;
+    }
     .tree {
         font-family: monospace;
         white-space: pre;
