@@ -15,17 +15,16 @@ def load_data():
 # Christmas tree ASCII art
 def christmas_tree():
     return """
-         🌟
-         🎄
-        🎄🎄
-       🎄🎄🎄
-      🎄🎄🎄🎄
-     🎄🎄🎄🎄🎄
-    🎄🎄🎄🎄🎄🎄
-   🎄🎄🎄🎄🎄🎄🎄
-  🎄🎄🎄🎄🎄🎄🎄🎄
- 🎄🎄🎄🎄🎄🎄🎄🎄🎄
-        🎁🎁🎁
+        🌟
+        🎄
+       🎄🎄
+      🎄🎄🎄
+     🎄🎄🎄🎄
+    🎄🎄🎄🎄🎄
+   🎄🎄🎄🎄🎄🎄
+  🎄🎄🎄🎄🎄🎄🎄
+ 🎄🎄🎄🎄🎄🎄🎄🎄
+      🎁🎁🎁
     """
 
 # Streamlit app
@@ -41,7 +40,7 @@ def main():
     st.markdown("""
     <style>
     .stApp {
-        background-color: #1e3f41;
+        background-color: #2c5a7c;
         color: #FFFFFF;
     }
     .stButton>button {
@@ -51,23 +50,26 @@ def main():
         font-weight: bold;
     }
     .stTextInput>div>div>input {
-        color: #1e3f41;
+        color: #2c5a7c;
         background-color: #f0f0f0;
     }
     .tree {
         font-family: monospace;
         white-space: pre;
-        text-align: center;
+        line-height: 1;
         color: #00a86b;
+    }
+    .centered {
+        text-align: center;
     }
     </style>
     """, unsafe_allow_html=True)
 
     # Title with emojis
-    st.title("🎄 Secret Santa Revealer 🎅")
+    st.markdown("<h1 class='centered'>🎄 Secret Santa Revealer 🎅</h1>", unsafe_allow_html=True)
 
     # Display ASCII Christmas tree
-    st.markdown(f'<div class="tree">{christmas_tree()}</div>', unsafe_allow_html=True)
+    st.markdown(f"<pre class='tree centered'>{christmas_tree()}</pre>", unsafe_allow_html=True)
 
     # Load data
     pairings, alias_to_name = load_data()
@@ -75,21 +77,23 @@ def main():
     # User input
     user_alias = st.text_input("Enter Your Elf Name (Alias):")
 
-    if st.button("Reveal My Secret Santa Recipient"):
-        if user_alias:
-            if user_alias in pairings:
-                recipient_alias = pairings[user_alias]
-                recipient_name = alias_to_name.get(recipient_alias, recipient_alias)
-                st.success(f"🎁 Ho Ho Ho! Your Secret Santa recipient is: {recipient_name} 🎁")
-                st.balloons()
+    col1, col2, col3 = st.columns([1,2,1])
+    with col2:
+        if st.button("Reveal My Secret Santa Recipient"):
+            if user_alias:
+                if user_alias in pairings:
+                    recipient_alias = pairings[user_alias]
+                    recipient_name = alias_to_name.get(recipient_alias, recipient_alias)
+                    st.success(f"🎁 Ho Ho Ho! Your Secret Santa recipient is: {recipient_name} 🎁")
+                    st.balloons()
+                else:
+                    st.error("Oops! This elf name is not on Santa's list. Try again!")
             else:
-                st.error("Oops! This elf name is not on Santa's list. Try again!")
-        else:
-            st.warning("Please enter your elf name (alias).")
+                st.warning("Please enter your elf name (alias).")
 
     # Festive footer
     st.markdown("---")
-    st.markdown("🎄 Merry Christmas and Happy Secret Santa! 🎅")
+    st.markdown("<p class='centered'>🎄 Merry Christmas and Happy Secret Santa! 🎅</p>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
