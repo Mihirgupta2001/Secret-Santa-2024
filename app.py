@@ -12,20 +12,20 @@ def load_data():
     alias_to_name = {alias: name for name, alias in team_members}
     return pairings, alias_to_name
 
-# Christmas tree ASCII art
+# Christmas tree ASCII art (centered)
 def christmas_tree():
     return """
-         🌟
-         🎄
-        🎄🎄
-       🎄🎄🎄
-      🎄🎄🎄🎄
-     🎄🎄🎄🎄🎄
-    🎄🎄🎄🎄🎄🎄
-   🎄🎄🎄🎄🎄🎄🎄
-  🎄🎄🎄🎄🎄🎄🎄🎄
- 🎄🎄🎄🎄🎄🎄🎄🎄🎄
-      🎁🎁🎁
+           🌟
+           🎄
+          🎄🎄
+         🎄🎄🎄
+        🎄🎄🎄🎄
+       🎄🎄🎄🎄🎄
+      🎄🎄🎄🎄🎄🎄
+     🎄🎄🎄🎄🎄🎄🎄
+    🎄🎄🎄🎄🎄🎄🎄🎄
+   🎄🎄🎄🎄🎄🎄🎄🎄🎄
+          🎁🎁🎁
     """
 
 # Streamlit app
@@ -37,7 +37,7 @@ def main():
         layout="centered"
     )
 
-    # Custom CSS for Christmas colors
+    # Custom CSS for Christmas colors, centered tree, and light success message
     st.markdown("""
     <style>
     .stApp {
@@ -55,12 +55,19 @@ def main():
         background-color: #f0f0f0;
     }
     .tree {
-    font-family: monospace;
-    white-space: pre;
-    display: flex;
-    justify-content: center;
-    color: #00a86b;
-}
+        font-family: monospace;
+        white-space: pre;
+        display: flex;
+        justify-content: center;
+        color: #00a86b;
+    }
+    .light-success {
+        color: #b3ffb3 !important;
+        background-color: rgba(0, 255, 0, 0.1) !important;
+        border-color: #66ff66 !important;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -81,7 +88,7 @@ def main():
             if user_alias in pairings:
                 recipient_alias = pairings[user_alias]
                 recipient_name = alias_to_name.get(recipient_alias, recipient_alias)
-                st.success(f"🎁 Ho Ho Ho! Your Secret Santa recipient is: {recipient_name} 🎁")
+                st.markdown(f'<div class="light-success">🎁 Ho Ho Ho! Your Secret Santa recipient is: {recipient_name} 🎁</div>', unsafe_allow_html=True)
                 st.balloons()
             else:
                 st.error("Oops! This elf name is not on Santa's list. Try again!")
