@@ -15,7 +15,7 @@ def load_data():
 # Christmas tree made of tree emojis
 def christmas_tree():
     return """
-        🌟
+        ⭐
         🎄
        🎄🎄
       🎄🎄🎄
@@ -24,7 +24,7 @@ def christmas_tree():
    🎄🎄🎄🎄🎄🎄
   🎄🎄🎄🎄🎄🎄🎄
  🎄🎄🎄🎄🎄🎄🎄🎄
-      🎁🎁🎁
+     🎁🎁🎁
     """
 
 # Streamlit app
@@ -45,37 +45,46 @@ def main():
     }
     .stButton>button {
         color: #ffffff;
-        background-color: #c41e3a;
-        border: 2px solid #007a33;
+        background-color: #146B3A;
+        border: 2px solid #BB2528;
         font-weight: bold;
+        padding: 0.5em 1em;
+        font-size: 18px;
+        transition: all 0.3s ease;
+    }
+    .stButton>button:hover {
+        background-color: #BB2528;
+        border-color: #146B3A;
+        color: #ffffff;
     }
     .stTextInput>div>div>input {
         color: #1e1e1e;
         background-color: #ffffff;
-        border: 2px solid #007a33;
+        border: 2px solid #146B3A;
     }
     .tree {
-        font-family: monospace;
+        font-family: 'Courier New', Courier, monospace;
         white-space: pre;
-        line-height: 1.2;
-        font-size: 20px;
+        line-height: 1;
+        font-size: 24px;
+        text-align: center;
     }
     .centered {
         text-align: center;
     }
     h1 {
-        color: #c41e3a;
+        color: #BB2528;
     }
     .stSuccess {
-        background-color: #007a33;
+        background-color: #146B3A;
         color: #ffffff;
     }
     .stWarning {
-        background-color: #ffd700;
+        background-color: #FFF700;
         color: #1e1e1e;
     }
     .stError {
-        background-color: #c41e3a;
+        background-color: #BB2528;
         color: #ffffff;
     }
     </style>
@@ -85,7 +94,7 @@ def main():
     st.markdown("<h1 class='centered'>🎄 Secret Santa Revealer 🎅</h1>", unsafe_allow_html=True)
 
     # Display Christmas tree
-    st.markdown(f"<div class='tree centered'>{christmas_tree()}</div>", unsafe_allow_html=True)
+    st.markdown(f"<pre class='tree'>{christmas_tree()}</pre>", unsafe_allow_html=True)
 
     # Load data
     pairings, alias_to_name = load_data()
@@ -109,7 +118,7 @@ def main():
 
     # Festive footer
     st.markdown("---")
-    st.markdown("<p class='centered' style='color: #c41e3a;'>🎄 Merry Christmas and Happy Secret Santa! 🎅</p>", unsafe_allow_html=True)
+    st.markdown("<p class='centered' style='color: #BB2528;'>🎄 Merry Christmas and Happy Secret Santa! 🎅</p>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
