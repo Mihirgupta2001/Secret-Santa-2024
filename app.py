@@ -1,44 +1,47 @@
 import streamlit as st
 import json
+from cryptography.fernet import Fernet
+import base64
 
-# Load pairings from JSON file
-@st.cache_data
-def load_pairings():
-    with open("pairings.json", "r") as file:
-        return json.load(file)
+# Function to generate password for each user
+def generate_password(name, birth_year):
+    return f"{name[:4].lower()}{birth_year}"
 
-# Process name input
-def process_name(name):
-    # Take the word before the first space and convert to lowercase
-    return name.split()[0].lower()
+# Function to decrypt data with a specific password
+def decrypt_data(encrypted_data, password):
+    key = base64.urlsafe_b64encode(password.encode().ljust(32)[:32])
+    fernet = Fernet(key)
+    return fernet.decrypt(encrypted_data.encode()).decode()
 
 # Streamlit app
 def main():
-    st.title("Secret Santa Revealer 🎅")
+    st.title("Secret Santa Revealer")
 
-    # Load pairings
-    pairings = load_pairings()
+    # Load encrypted pairings
+    with open('encrypted_pairings.json', 'r') as f:
+        encrypted_pairings = json.load(f)
 
     # User input
-    name_input = st.text_input("Your Name:")
-    birth_year = st.number_input(
-        "Your Birth Year (for verification):", min_value=1900, max_value=2023, value=1990
-    )
+    name = st.text_input("Your Name:")
+    birth_year = st.number_input("Your Birth Year:", min_value=1900, max_value=2023, value=1990)
 
     if st.button("Reveal My Secret Santa Recipient"):
-        # Process the name input
-        processed_name = process_name(name_input)
-        
-        key = f"{processed_name}_{birth_year}"  # Construct the key using processed name and birth year
-        
-        # Convert all keys in pairings to lowercase for case-insensitive matching
-        pairings_lower = {k.lower(): v for k, v in pairings.items()}
-        
-        if key in pairings_lower:
-            recipient = pairings_lower[key]  # Get the recipient's name
-            st.success(f"Your Secret Santa recipient is: {recipient}")
+        if name and birth_year:
+            password = generate_password(name, birth_year)
+            try:
+                # Encrypt the input name to find the matching key
+                encrypted_name = encrypt_data(name, password)
+                for encrypted_gifter, encrypted_recipient in encrypted_pairings.items():
+                    if decrypt_data(encrypted_gifter, password) == name:
+                        decrypted_recipient = decrypt_data(encrypted_recipient, password)
+                        st.success(f"Your Secret Santa recipient is: {decrypted_recipient}")
+                        break
+                else:
+                    st.error("Name not found in the participants list.")
+            except:
+                st.error("Invalid name or birth year. Please try again.")
         else:
-            st.error("Invalid name or birth year. Please try again.")
+            st.error("Please enter both your name and birth year.")
 
 if __name__ == "__main__":
     main()
